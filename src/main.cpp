@@ -4,13 +4,17 @@
 
 int main()
 {
-    Board<char, 9> ticTacToe{
+    Board<char, 3> ticTacToe{
         {'x', 'o', 'x',
          '.', 'x', 'o',
          'x', 'o', 'o'}
     };
 
     std::cout << ticTacToe;
+
+    Solver<char, 3> solver(ticTacToe);
+
+    std::cout << solver.evaluatePosition(ticTacToe, 'x') << "\n";
 
     return 0;
 }
