@@ -26,19 +26,23 @@ public:
         
     }
 
-    int alphabeta(const Board<N>& board, size_t depth, bool isMaximizing, int alpha, int beta)
+    int alphabeta(const Board<N>& board, size_t depth, bool isMaximizing, int alpha = INT_MIN, int beta = INT_MAX)
     {
-        if (depth == 0 || board.isFull())
+        int heuristicValue = evaluatePosition(board);
+        if (depth == 0 || board.isFull() || heuristicValue != 0)
         {
-            return evaluatePosition(board, isMaximizing);
+            // std::cout<<"eval: "<<heuristicValue<<"\n";
+            return heuristicValue;
         }
         else if (isMaximizing)
         {
+            // std::cout<<"maxi"<<depth<<"\n";
             int value = INT_MIN;
             for (auto move : board.getPossibleMoves())
             {
                 Board<N> newBoard = board;
                 newBoard.makeMove(move);
+                // std::cout<<"maxi move"<<move.first<<","<<move.second<<"\n";
                 value = std::max(value, alphabeta(newBoard, depth-1, false, alpha, beta));
                 if (value >= beta)
                 {
@@ -53,9 +57,11 @@ public:
             int value = INT_MAX;
             for (auto move : board.getPossibleMoves())
             {
+                // std::cout<<"mini"<<depth<<"\n";
                 Board<N> newBoard = board;
                 newBoard.makeMove(move);
-                value = std::max(value, alphabeta(newBoard, depth-1, true, alpha, beta));
+                // std::cout<<"mini move"<<move.first<<","<<move.second<<"\n";
+                value = std::min(value, alphabeta(newBoard, depth-1, true, alpha, beta));
                 if (value <= alpha)
                 {
                     break;
@@ -66,7 +72,7 @@ public:
         }
     }
 
-    int evaluatePosition(const Board<N>& board, bool maximize)
+    int evaluatePosition(const Board<N>& board)
     {
         std::array<int, 2*N+2> scores {0};
         auto moves = board.getMoves();
@@ -75,8 +81,7 @@ public:
         for (const auto& move : moves)
         {
             const auto [row, col] = move;
-            int value = maximize ? 1 : -1;
-            value = firstPlayerMove ? value : -value;
+            int value = firstPlayerMove ? 1 : -1;
 
             scores[row] += value;
             scores[col + N] += value;

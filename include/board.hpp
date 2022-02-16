@@ -49,7 +49,7 @@ public:
             const auto [row, col] = move;
             board[row*N + col] = true;
         }
-        for (int i=0; i<board.size(); i++)
+        for (size_t i=0; i<board.size(); i++)
         {
             if (board[i] == false)
             {
