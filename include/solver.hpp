@@ -1,5 +1,6 @@
 #pragma once
 
+#include <climits>
 #include"board.hpp"
 
 template<typename T, size_t N>
@@ -25,12 +26,47 @@ public:
         
     }
 
-    int alphabeta(const Board<T, N>& node, size_t depth, bool isMaximizing, int alpha, int beta)
+    int alphabeta(const Board<T, N>& board, size_t depth, T symbol, bool isMaximizing, int alpha, int beta)
     {
-        return 0;
+        if (depth == 0 || board.isFull())
+        {
+            return evaluatePosition(board, symbol);
+        }
+        else if (isMaximizing)
+        {
+            int value = INT_MIN;
+            for (auto move : board.getPossibleMoves())
+            {
+                Board<T, N> newBoard = board;
+                newBoard.makeMove(move, symbol);
+                value = std::max(value, alphabeta(newBoard, depth-1, symbol, false, alpha, beta));
+                if (value >= beta)
+                {
+                    break;
+                }
+                alpha = std::max(alpha, value);
+            }
+            return value;
+        }
+        else
+        {
+            int value = INT_MAX;
+            for (auto move : board.getPossibleMoves())
+            {
+                Board<T, N> newBoard = board;
+                newBoard.makeMove(move, symbol+1);
+                value = std::max(value, alphabeta(newBoard, depth-1, symbol, true, alpha, beta));
+                if (value <= alpha)
+                {
+                    break;
+                }
+                beta = std::min(beta, value);
+            }
+            return value;
+        }
     }
 
-    int evaluatePosition(const Board<T, N>& board, char symbol)
+    int evaluatePosition(const Board<T, N>& board, T symbol, bool maximize)
     {
         std::array<int, 2*N+2> scores {0};
 
@@ -40,10 +76,10 @@ public:
         {
             for (size_t j=0; j<N; j++)
             {
-                int value;
-                if (position[i*N + j] == symbol) value = 1;
-                else if (position[i*N + j] == '.') value = 0;
-                else value = -1;
+                int value = maximize ? 1 : -1;
+                // if (position[i*N + j] == symbol) value;
+                if (position[i*N + j] == '.') value = 0;
+                else if (position[i*N + j] != symbol) value = -value;
 
                 scores[i] += value;
                 scores[N + j] += value;
