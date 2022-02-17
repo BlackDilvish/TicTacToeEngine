@@ -10,10 +10,9 @@ int main()
     Solver<3> solver(ticTacToe);
 
     std::cout << ticTacToe;
-    std::cout << solver.alphabeta(ticTacToe2, 5, true) << "\n";
-
-    std::cout << ticTacToe2;
-    std::cout << solver.alphabeta(ticTacToe2, 5, false) << "\n";
+    std::cout << solver.alphabeta(ticTacToe, 5, false) << "\n";
+    auto move1 = solver.getNextMove(ticTacToe);
+    std::cout << move1.first << " " << move1.second << "\n";
 
     return 0;
 }

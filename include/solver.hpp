@@ -14,9 +14,28 @@ public:
 
     }
 
-    Board<N> getNextPosition()
+    std::pair<size_t, size_t> getNextMove(const Board<N>& board)
     {
-        return Board<N>();
+        Board<N> testBoard = board;
+        std::pair<size_t, size_t> bestMove;
+        int bestMoveValue = INT_MIN;
+
+        for (const auto& move : testBoard.getPossibleMoves())
+        {
+            testBoard.makeMove(move);
+
+            int currMoveValue = alphabeta(testBoard, 10, false);
+
+            testBoard.undoLastMove();
+
+            if (currMoveValue > bestMoveValue)
+            {
+                bestMoveValue = currMoveValue;
+                bestMove = move;
+            }
+        }
+
+        return bestMove;
     }
 
 
@@ -38,7 +57,7 @@ public:
         {
             // std::cout<<"maxi"<<depth<<"\n";
             int value = INT_MIN;
-            for (auto move : board.getPossibleMoves())
+            for (const auto& move : board.getPossibleMoves())
             {
                 Board<N> newBoard = board;
                 newBoard.makeMove(move);
@@ -55,7 +74,7 @@ public:
         else
         {
             int value = INT_MAX;
-            for (auto move : board.getPossibleMoves())
+            for (const auto& move : board.getPossibleMoves())
             {
                 // std::cout<<"mini"<<depth<<"\n";
                 Board<N> newBoard = board;

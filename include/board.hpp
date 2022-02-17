@@ -29,6 +29,11 @@ public:
         m_moves.push_back(move);
     }
 
+    void undoLastMove()
+    {
+        m_moves.pop_back();
+    }
+
     bool isFull() const
     {
         return m_moves.size() == std::pow(N, 2);
