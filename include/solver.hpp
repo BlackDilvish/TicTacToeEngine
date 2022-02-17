@@ -7,13 +7,6 @@ template<size_t N>
 class Solver
 {
 public:
-    Solver() = default;
-    Solver(const Board<N>& initialPosition)
-    : m_board(initialPosition)
-    {
-
-    }
-
     std::pair<size_t, size_t> getNextMove(const Board<N>& board)
     {
         Board<N> testBoard = board;
@@ -39,12 +32,7 @@ public:
     }
 
 
-// private:
-    void calculateNextMove()
-    {
-        
-    }
-
+private:
     int alphabeta(const Board<N>& board, size_t depth, bool isMaximizing, int alpha = INT_MIN, int beta = INT_MAX)
     {
         int heuristicValue = evaluatePosition(board);
@@ -124,6 +112,4 @@ public:
         }
         return 0;
     }
-
-    Board<N> m_board;
 };
