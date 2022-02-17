@@ -19,9 +19,18 @@ set (CMAKE_CXX_FLAGS "-Wall -std=c++17")
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include)
 file(GLOB SRC src/*.cpp)
 
+add_subdirectory(test)
+add_subdirectory(lib/googletest)
+
 add_executable(${PROJECT_NAME} ${SRC})
+add_library(${PROJECT_NAME}_lib STATIC ${SRC})
 
 add_custom_target(valgrind
 	COMMAND valgrind ./${PROJECT_NAME}
 	DEPENDS ${PROJECT_NAME}
+)
+
+add_custom_target(test
+	COMMAND ./test/${PROJECT_NAME}_test
+	DEPENDS test/${PROJECT_NAME}_test
 )
