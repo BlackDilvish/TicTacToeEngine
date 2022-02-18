@@ -3,10 +3,10 @@
 
 TEST(SolverTest, testBestMoveFor3x3Board)
 {
-    Board<3>::MovesVector moves{{0,0}, {1,1}, {1,0}, {0,1}};
-    Board<3> board{moves};
+    Board::MovesVector moves{{0,0}, {1,1}, {1,0}, {0,1}};
+    Board board{3, moves};
 
-    Solver<3> solver;
+    Solver solver;
     auto bestMove = solver.getNextMove(board);
     const auto winningMove = std::make_pair(2, 0);
 
@@ -16,10 +16,10 @@ TEST(SolverTest, testBestMoveFor3x3Board)
 
 TEST(SolverTest, testBestMoveFor4x4Board)
 {
-    Board<4>::MovesVector moves{{0,1}, {0,3}, {1,1}, {2,0}, {2,1}, {2,2}};
-    Board<4> board{moves};
+    Board::MovesVector moves{{0,1}, {0,3}, {1,1}, {2,0}, {2,1}, {2,2}};
+    Board board{4, moves};
 
-    Solver<4> solver;
+    Solver solver;
     auto bestMove = solver.getNextMove(board);
     const auto winningMove = std::make_pair(3, 1);
 
@@ -29,11 +29,11 @@ TEST(SolverTest, testBestMoveFor4x4Board)
 
 TEST(SolverTest, testBestMoveFor5x5Board)
 {
-    Board<5>::MovesVector moves{{4,4}, {0,3}, {0,0}, {2,0}, {2,2}, {2,4}, {3,3}, {0,1}};
-    Board<5> board{moves};
+    Board::MovesVector moves{{4,4}, {0,3}, {0,0}, {2,0}, {2,2}, {2,4}, {3,3}, {0,1}};
+    Board board{5, moves};
     size_t depth = 3;
 
-    Solver<5> solver;
+    Solver solver;
     auto bestMove = solver.getNextMove(board, depth);
     const auto winningMove = std::make_pair(1, 1);
 
@@ -43,11 +43,11 @@ TEST(SolverTest, testBestMoveFor5x5Board)
 
 TEST(SolverTest, testBestMoveFor6x6Board)
 {
-    Board<6>::MovesVector moves{{0,5}, {0,3}, {1,4}, {2,0}, {3,2}, {2,4}, {4,1}, {0,1}, {5,0}, {1,1}};
-    Board<6> board{moves};
+    Board::MovesVector moves{{0,5}, {0,3}, {1,4}, {2,0}, {3,2}, {2,4}, {4,1}, {0,1}, {5,0}, {1,1}};
+    Board board{6, moves};
     size_t depth = 3;
 
-    Solver<6> solver;
+    Solver solver;
     auto bestMove = solver.getNextMove(board, depth);
     const auto winningMove = std::make_pair(2, 3);
 

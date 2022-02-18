@@ -3,8 +3,8 @@
 
 TEST(BoardTest, testGetAllMoves)
 {
-    Board<3>::MovesVector moves{{0,0}, {1,1}};
-    Board<3> board{moves};
+    Board::MovesVector moves{{0,0}, {1,1}};
+    Board board{3, moves};
 
     EXPECT_EQ(moves, board.getMoves());
 }
