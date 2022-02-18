@@ -1,11 +1,15 @@
 #include<iostream>
 #include"board.hpp"
 #include"solver.hpp"
+#include"parser.hpp"
 
 int main()
 {
-    Board<3> ticTacToe ({{0,0}, {0,1}, {0,2}, {2,2}, {1,1}, {2,1}});
-    Board<3> ticTacToe2 ({{0,0}, {2,0}, {0,2}, {1,1}, {2,1}});
+    std::string input = "00,01,02,22,11,21";
+    Parser parser;
+    auto moves = parser.getMovesFromInputString(input, ',');
+
+    Board<3> ticTacToe (moves);
 
     Solver<3> solver;
 
