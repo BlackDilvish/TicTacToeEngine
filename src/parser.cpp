@@ -37,7 +37,7 @@ std::vector<std::string> Parser::split(const std::string& content, char token)
 
 std::pair<size_t, size_t> Parser::getMoveFromToken(const std::string& token)
 {
-    if (token.size() == 2 && std::isdigit(token[0]) && isdigit(token[0]))
+    if (isTokenParsable(token))
     {
         int row = token[0] - '0';
         int col = token[1] - '0';
@@ -48,4 +48,9 @@ std::pair<size_t, size_t> Parser::getMoveFromToken(const std::string& token)
     {
         throw std::runtime_error("Input token: " + token + " is invalid");
     }
+}
+
+bool Parser::isTokenParsable(const std::string& token)
+{
+    return token.size() == 2 && std::isdigit(token[0]) && isdigit(token[0]);
 }

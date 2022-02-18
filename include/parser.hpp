@@ -12,4 +12,5 @@ public:
 private:
     std::vector<std::string> split(const std::string& content, char token);
     std::pair<size_t, size_t> getMoveFromToken(const std::string& token) noexcept(false);
+    bool isTokenParsable(const std::string& token);
 };
