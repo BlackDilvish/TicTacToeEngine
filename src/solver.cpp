@@ -1,20 +1,19 @@
 #include "solver.hpp"
 
-std::pair<size_t, size_t> Solver::getNextMove(const Board& board, size_t depth)
+std::pair<size_t, size_t> Solver::getNextMove(const Board& board, size_t depth, bool firstPlayer)
 {
     Board testBoard = board;
     std::pair<size_t, size_t> bestMove;
-    int bestMoveValue = INT_MIN;
+    int bestMoveValue = firstPlayer ? INT_MIN : INT_MAX;
 
     for (const auto& move : testBoard.getPossibleMoves())
     {
         testBoard.makeMove(move);
 
-        int currMoveValue = alphabeta(testBoard, depth, false);
+        int currMoveValue = alphabeta(testBoard, depth, !firstPlayer);
 
         testBoard.undoLastMove();
-
-        if (currMoveValue > bestMoveValue)
+        if ((firstPlayer && currMoveValue > bestMoveValue) || (!firstPlayer && currMoveValue < bestMoveValue))
         {
             bestMoveValue = currMoveValue;
             bestMove = move;
