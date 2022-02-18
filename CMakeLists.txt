@@ -21,6 +21,7 @@ file(GLOB SRC src/*.cpp)
 
 add_subdirectory(test)
 add_subdirectory(lib/googletest)
+add_subdirectory(demo)
 
 add_executable(${PROJECT_NAME} ${SRC})
 add_library(${PROJECT_NAME}_lib STATIC ${SRC})
