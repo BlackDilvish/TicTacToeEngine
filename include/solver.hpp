@@ -7,7 +7,7 @@ template<size_t N>
 class Solver
 {
 public:
-    std::pair<size_t, size_t> getNextMove(const Board<N>& board)
+    std::pair<size_t, size_t> getNextMove(const Board<N>& board, size_t depth = 5)
     {
         Board<N> testBoard = board;
         std::pair<size_t, size_t> bestMove;
@@ -17,7 +17,7 @@ public:
         {
             testBoard.makeMove(move);
 
-            int currMoveValue = alphabeta(testBoard, 10, false);
+            int currMoveValue = alphabeta(testBoard, depth, false);
 
             testBoard.undoLastMove();
 
@@ -33,24 +33,21 @@ public:
 
 
 private:
-    int alphabeta(const Board<N>& board, size_t depth, bool isMaximizing, int alpha = INT_MIN, int beta = INT_MAX)
+    int alphabeta(Board<N>& board, size_t depth, bool isMaximizing, int alpha = INT_MIN, int beta = INT_MAX)
     {
         int heuristicValue = evaluatePosition(board);
         if (depth == 0 || board.isFull() || heuristicValue != 0)
         {
-            // std::cout<<"eval: "<<heuristicValue<<"\n";
             return heuristicValue;
         }
         else if (isMaximizing)
         {
-            // std::cout<<"maxi"<<depth<<"\n";
             int value = INT_MIN;
             for (const auto& move : board.getPossibleMoves())
             {
-                Board<N> newBoard = board;
-                newBoard.makeMove(move);
-                // std::cout<<"maxi move"<<move.first<<","<<move.second<<"\n";
-                value = std::max(value, alphabeta(newBoard, depth-1, false, alpha, beta));
+                board.makeMove(move);
+                value = std::max(value, alphabeta(board, depth-1, false, alpha, beta));
+                board.undoLastMove();
                 if (value >= beta)
                 {
                     break;
@@ -64,11 +61,9 @@ private:
             int value = INT_MAX;
             for (const auto& move : board.getPossibleMoves())
             {
-                // std::cout<<"mini"<<depth<<"\n";
-                Board<N> newBoard = board;
-                newBoard.makeMove(move);
-                // std::cout<<"mini move"<<move.first<<","<<move.second<<"\n";
-                value = std::min(value, alphabeta(newBoard, depth-1, true, alpha, beta));
+                board.makeMove(move);
+                value = std::min(value, alphabeta(board, depth-1, true, alpha, beta));
+                board.undoLastMove();
                 if (value <= alpha)
                 {
                     break;
