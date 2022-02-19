@@ -5,16 +5,18 @@
 #include<cmath>
 #include<vector>
 #include<algorithm>
+#include<string>
 
 class Board
 {
 public:
     using MovesVector = std::vector<std::pair<size_t, size_t>>;
+    using Move = std::pair<size_t, size_t>;
 
     Board(size_t size, const MovesVector& moves);
     Board(const Board& board);
 
-    void makeMove(const std::pair<size_t, size_t>& move) { m_moves.push_back(move); }
+    void makeMove(const Move& move) noexcept(false);
     void undoLastMove() { m_moves.pop_back(); }
 
     bool isFull() const { return m_moves.size() == std::pow(m_size, 2); }
@@ -27,8 +29,9 @@ public:
 
 private:
     size_t m_size;
-    std::vector<std::pair<size_t, size_t>> m_moves;
+    std::vector<Move> m_moves;
 
     void print(std::ostream& os) const;
     char getSymbol(size_t index) const;
+    bool isMoveValid(const Move& move) const;
 };

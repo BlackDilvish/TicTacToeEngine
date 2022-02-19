@@ -22,19 +22,9 @@ TEST(ParserTest, testGettingMovesFromInputStringValid)
 TEST(ParserTest, testGettingMovesFromInputStringInvalid)
 {
     const std::array<std::string, 2> input = {"3", "00,01,02;22,11,21"};
-    const std::string errorMessage = "Input token: 02;22 is invalid";
-
     Parser parser;
 
-    try
-    {
-        parser.parse(input);
-        FAIL() << "Expected std::runtime_error";
-    }
-    catch(const std::runtime_error& e)
-    {
-        EXPECT_EQ(e.what(), errorMessage);
-    }
+    ASSERT_THROW(parser.parse(input), std::runtime_error);
 }
 
 TEST(ParserTest, testGettingDimensionFromInputStringValid)
