@@ -42,17 +42,7 @@ TEST(ParserTest, testGettingDimensionFromInputStringValid)
 TEST(ParserTest, testGettingDimensionFromInputStringInvalid)
 {
     const std::array<std::string, 2> input = {"three", "00,01,02,22,11,21"};
-    const std::string errorMessage = "Dimension parameter: three is NaN";
-
     Parser parser;
 
-    try
-    {
-        parser.parse(input);
-        FAIL() << "Expected std::runtime_error";
-    }
-    catch(const std::runtime_error& e)
-    {
-        EXPECT_EQ(e.what(), errorMessage);
-    }
+    ASSERT_THROW(parser.parse(input), std::runtime_error);
 }
