@@ -21,7 +21,7 @@ TEST(SolverTest, testBestMoveFor3x3BoardSecondPlayer)
     const size_t depth = 5;
 
     Solver solver;
-    auto bestMove = solver.getNextMove(board, depth, false);
+    auto bestMove = solver.getNextMove(board, depth);
     const auto winningMove = std::make_pair(2, 0);
 
     EXPECT_EQ(winningMove.first, bestMove.first);
@@ -48,7 +48,7 @@ TEST(SolverTest, testBestMoveFor4x4BoardSecondPlayer)
     const size_t depth = 5;
 
     Solver solver;
-    auto bestMove = solver.getNextMove(board, depth, false);
+    auto bestMove = solver.getNextMove(board, depth);
     const auto winningMove = std::make_pair(3, 1);
 
     EXPECT_EQ(winningMove.first, bestMove.first);
@@ -76,7 +76,7 @@ TEST(SolverTest, testBestMoveFor5x5BoardSecondPlayer)
     const size_t depth = 3;
 
     Solver solver;
-    auto bestMove = solver.getNextMove(board, depth, false);
+    auto bestMove = solver.getNextMove(board, depth);
     const auto winningMove = std::make_pair(1, 1);
 
     EXPECT_EQ(winningMove.first, bestMove.first);
@@ -104,7 +104,7 @@ TEST(SolverTest, testBestMoveFor6x6BoardSecondPlayer)
     const size_t depth = 3;
 
     Solver solver;
-    auto bestMove = solver.getNextMove(board, depth, false);
+    auto bestMove = solver.getNextMove(board, depth);
     const auto winningMove = std::make_pair(2, 3);
 
     EXPECT_EQ(winningMove.first, bestMove.first);

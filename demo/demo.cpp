@@ -60,7 +60,7 @@ int main()
         if (gameFinished(board)) break;
 
         std::cout << "Bot turn...\n";
-        auto botMove = solver.getNextMove(board, 15, !playFirst);
+        auto botMove = solver.getNextMove(board, 15);
         board.makeMove(botMove);
         std::cout << board;
 

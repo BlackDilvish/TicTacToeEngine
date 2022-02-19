@@ -1,9 +1,10 @@
 #include "solver.hpp"
 
-std::pair<size_t, size_t> Solver::getNextMove(const Board& board, size_t depth, bool firstPlayer)
+std::pair<size_t, size_t> Solver::getNextMove(const Board& board, size_t depth)
 {
     Board testBoard = board;
     std::pair<size_t, size_t> bestMove;
+    bool firstPlayer = (board.getMoves().size()+1) % 2;
     int bestMoveValue = firstPlayer ? INT_MIN : INT_MAX;
 
     for (const auto& move : testBoard.getPossibleMoves())

@@ -6,7 +6,7 @@
 class Solver
 {
 public:
-    std::pair<size_t, size_t> getNextMove(const Board& board, size_t depth = 5, bool firstPlayer = true);
+    std::pair<size_t, size_t> getNextMove(const Board& board, size_t depth = 5);
     int getGameResult(const Board& board);
 
 private:
