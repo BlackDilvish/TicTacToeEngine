@@ -23,6 +23,11 @@ std::pair<size_t, size_t> Solver::getNextMove(const Board& board, size_t depth, 
     return bestMove;
 }
 
+int Solver::getGameResult(const Board& board)
+{
+    return evaluatePosition(board);
+}
+
 int Solver::alphabeta(Board& board, size_t depth, bool isMaximizing, int alpha, int beta)
 {
     int heuristicValue = evaluatePosition(board);

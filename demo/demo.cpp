@@ -1,6 +1,32 @@
 #include<iostream>
 #include"solver.hpp"
 
+bool gameFinished(const Board& board)
+{
+    Solver solver;
+    int result = solver.getGameResult(board);
+
+    if (result == 1)
+    {
+        std::cout << "First player won\n";
+        return true;
+    }
+    else if (result == -1)
+    {
+        std::cout << "Second player won\n";
+        return true;
+    }
+    else if (board.isFull())
+    {
+        std::cout << "Draw\n";
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 int main()
 {
     size_t size;
@@ -31,10 +57,14 @@ int main()
         board.makeMove(std::make_pair(row, col));
         std::cout << board;
 
+        if (gameFinished(board)) break;
+
         std::cout << "Bot turn...\n";
         auto botMove = solver.getNextMove(board, 15, !playFirst);
         board.makeMove(botMove);
         std::cout << board;
+
+        if (gameFinished(board)) break;
     }
 
     return 0;

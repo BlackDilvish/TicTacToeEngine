@@ -110,3 +110,15 @@ TEST(SolverTest, testBestMoveFor6x6BoardSecondPlayer)
     EXPECT_EQ(winningMove.first, bestMove.first);
     EXPECT_EQ(winningMove.second, bestMove.second);
 }
+
+TEST(SolverTest, testEvaluateGameResultFor3x3Board)
+{
+    Board::MovesVector moves{{0,0}, {1,1}, {1,0}, {0,1}, {2,0}};
+    Board board{3, moves};
+    const int expectedResult = 1;
+
+    Solver solver;
+    const int calculatedResult = solver.getGameResult(board);
+
+    EXPECT_EQ(expectedResult, calculatedResult);
+}
